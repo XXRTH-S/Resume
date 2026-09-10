@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+.git
+.openai
+.tools
+.env*
+*.tsbuildinfo
+tes.py
+README.md
+
+public/*.pdf
