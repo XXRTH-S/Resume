@@ -12,6 +12,22 @@ The 2026-09-11 content update was reviewed as a source diff only; no app, build,
 
 Previous validation: Docker Compose configuration validation passed. Production build and container runtime testing are not yet completed: dependency downloads were interrupted due to slow network access. The initial TypeScript check reported missing Next.js package/type declarations while installation was incomplete. This source is committed for handoff at the owner's request; successful production operation has not yet been verified.
 
+## Resume Cat chatbot
+
+The animated 2D black-cat mascot has four sprite states: idle, blink, thinking, and greeting/speaking. Click it to open the bilingual resume assistant. Pause animation or use your operating system reduced-motion setting. This is a 2D sprite mascot, not a rigged 3D model.
+
+Before starting Docker, create a local `.env` from `.env.example` if you do not already have one. Set `OPENROUTER_API_KEY` and keep `OPENROUTER_MODEL=openrouter/free`. Do not overwrite an existing key. The key is injected only into the backend at runtime, excluded from Git and Docker build contexts, and never sent to the browser. Never prefix it with NEXT_PUBLIC_.
+
+The Docker Compose deployment exposes only the web service. Nginx forwards chat requests to the internal Node.js service. Local `npm run dev` or a static-only host shows the widget but does not provide the chat backend; use Docker Compose for the complete experience. The existing Sites static configuration does not deploy this backend.
+
+Users explicitly start chat before any message is sent to OpenRouter and its selected model provider. Conversations stay in browser memory and disappear on refresh. Up to four recent message pairs are forwarded for context. The service does not log messages or store conversations; OpenRouter/provider data policies still apply. AI answers may be inaccurate and should be checked against the resume.
+
+Public resume facts are maintained in `server/resume.mjs`. The assistant is instructed to answer only from these facts, decline unrelated questions, and acknowledge missing information. No PDF, private street address, or API key is included in the prompt. Keep this file in sync with future resume updates.
+
+The service allows only `openrouter/free` or model IDs ending in `:free`, with no paid fallback. Limits are 5 requests per IP/minute, 15 requests overall/minute, 40 per UTC day, and 3 concurrent requests. Limits are in-memory per backend process and reset on restart; they are not an account-wide or persistent quota guarantee. Provider limits may be lower or shared with other applications. The API returns an error instead of inventing a reply when the provider is unavailable. For broader public traffic, add persistent abuse controls. Keep the backend port private and have any additional trusted reverse proxy pass the real client IP safely.
+
+Implementation was reviewed as source only per the owner's no-run instruction. No build, container run, or live OpenRouter request has been performed for this feature, so the configured key and provider response have not been verified.
+
 ## Run with Docker
 
 Install Docker Desktop and make sure the Linux engine is running (not paused).
@@ -20,7 +36,7 @@ Install Docker Desktop and make sure the Linux engine is running (not paused).
 docker compose up --build -d
 ```
 
-Open http://localhost:3000. The build compiles Next.js to a static export; the production container serves it using unprivileged Nginx. React interactions work in the browser. No database, API keys, or Node server are required at runtime.
+Open http://localhost:3000. The build compiles Next.js to a static export; the production container serves it using unprivileged Nginx. React interactions work in the browser. The portfolio is served by Nginx. A separate private Node.js service handles `/api/chat` and calls OpenRouter; the API key is required only for chat.
 
 ```sh
 docker compose ps
@@ -43,6 +59,7 @@ Open http://localhost:3000. `npm run build` creates the production export in `ou
 
 ## Features
 
+- Animated resume cat with Thai/English AI chat through OpenRouter
 - Responsive navigation and layout
 - Project category filters and accessible project-detail dialogs
 - Dark/light theme with a saved browser preference

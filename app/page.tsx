@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import ResumeChat from './ResumeChat';
 import { ArrowDown, ArrowUpRight, Check, Code2, Copy, Database, Github, Layers, Mail, MapPin, Menu, Moon, Smartphone, Sun, Terminal, Users, X } from 'lucide-react';
 
 const projects = [
@@ -33,6 +34,7 @@ export default function Home() {
   function toggleTheme() { setLight(!light); try { localStorage.setItem('portfolio-theme', !light ? 'light' : 'dark'); } catch {} }
   async function copyEmail() { try { await navigator.clipboard.writeText('Suteemon_Yodying@hotmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2500); } catch { window.location.href = 'mailto:Suteemon_Yodying@hotmail.com'; } }
   return <>
+    <ResumeChat/>
     <a className="skip" href="#main">Skip to content</a>
     <header className="header"><a href="#" className="logo" aria-label="Suteemon home">sy<span>.</span></a>
       <nav aria-label="Main navigation" className={menu ? 'nav open' : 'nav'}>{['Work', 'About', 'Skills', 'Contact'].map(item => <a key={item} href={'#' + item.toLowerCase()} onClick={() => setMenu(false)}>{item}</a>)}</nav>
