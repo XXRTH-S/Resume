@@ -2,6 +2,8 @@
 
 Generated with the built-in Imagegen tool from the two owner-supplied black-cat reference images. No source reference photos or resume PDF are committed.
 
+At the owner's request, the original transparent atlas was recolored with a script: white inner ears and pastel-pink noses in all four frames. Frame positions and dimensions are unchanged; every alpha value was verified identical to the original. The prompt below records the initial generation, before this recolor.
+
 `cat-atlas.png` is a transparent 2 x 2 sprite atlas. Cells in reading order: idle, closed eyes, thinking, greeting/speaking. `app/chat.css` selects cells using background-position and animates the sprite. It is a 2D mascot, not a 3D or Live2D rig.
 
 ## Generation prompt
