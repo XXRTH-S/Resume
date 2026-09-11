@@ -2,28 +2,15 @@ services:
   portfolio:
     build: .
     ports:
-      - "${PORT:-3000}:8080"
-    restart: unless-stopped
-    depends_on:
-      chat:
-        condition: service_healthy
-    read_only: true
-    tmpfs:
-      - /tmp
-    security_opt:
-      - no-new-privileges:true
-    cap_drop:
-      - ALL
-  chat:
-    build:
-      context: .
-      dockerfile: server/Dockerfile
+      - "${PORT:-3000}:3000"
     environment:
       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
       OPENROUTER_MODEL: ${OPENROUTER_MODEL:-google/gemma-4-31b-it:free}
       OPENROUTER_FALLBACK_MODEL: ${OPENROUTER_FALLBACK_MODEL-openrouter/free}
     restart: unless-stopped
     read_only: true
+    tmpfs:
+      - /tmp
     security_opt:
       - no-new-privileges:true
     cap_drop:

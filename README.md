@@ -1,79 +1,76 @@
-# Suteemon Yodying — Interactive Portfolio
+# Suteemon Yodying - Interactive Portfolio
 
-Portfolio built with Next.js App Router, React, TypeScript, and Lucide icons. Content is based on the supplied resume, without invented project links or achievements.
+Next.js App Router, React and TypeScript portfolio with Bubble, a fluffy animated kitten that answers resume questions through OpenRouter. Resume PDFs and API keys are excluded from Git.
 
-## Resume update
+## Vercel deployment
 
-Content updated from the latest supplied resume on 2026-09-11: current Full-Stack Developer role at Bangkok Expressway and Metro Public Company Limited, Bangkok location, and English proficiency listed as Good. Existing education, skills, KCE experience, and project details are retained. No PDF is included.
+Connect GitHub repository XXRTH-S/Resume, production branch main, to your existing Vercel project (owner supplied ID: prj_oGiKpGqPrHkZOKHTKNaKpjlKQEdO). The ID alone does not authenticate or link a deployment.
 
-## Validation status
+Use framework Next.js, root directory ./, Node.js 22, and the repository build settings in vercel.json. Output is .next, not out. Remove any old static export command or out-directory override in the dashboard. Both the portfolio and POST /api/chat now deploy together; no Docker service or separate backend URL is needed.
 
-The 2026-09-11 content update was reviewed as a source diff only; no app, build, tests, or containers were run, as requested.
+In Project Settings > Environment Variables, add these for Production and Preview:
 
-Previous validation: Docker Compose configuration validation passed. Production build and container runtime testing are not yet completed: dependency downloads were interrupted due to slow network access. The initial TypeScript check reported missing Next.js package/type declarations while installation was incomplete. This source is committed for handoff at the owner's request; successful production operation has not yet been verified.
+| Name | Value |
+| --- | --- |
+| OPENROUTER_API_KEY | Your existing OpenRouter key |
+| OPENROUTER_MODEL | google/gemma-4-31b-it:free |
+| OPENROUTER_FALLBACK_MODEL | openrouter/free |
 
-## Bubble chatbot
+Keep the key server-only: never use NEXT_PUBLIC_ and never commit .env. Local .env files are not uploaded by Git. Redeploy after changing environment variables. See [Vercel environment variables](https://vercel.com/docs/environment-variables).
 
-Latest check (2026-09-11): key authentication returned HTTP 200. Gemma returned provider-side HTTP 429 from Google AI Studio. The updated backend request helper automatically selected a free fallback and returned HTTP 200 with an answer matching the resume (nex-agi/nex-n2.5-pro:free). Seven mocked routing tests passed. No Docker, frontend build, or browser run was performed.
+The API uses the Node.js runtime with a 60-second function duration and a 45-second upstream timeout. Configuration is loaded at runtime, so building does not require a key. Missing configuration returns a clear error without exposing secrets.
 
-Bubble is a newly designed fluffy charcoal-gray kitten with four sprite states: idle, blink, and two alternating laptop-typing poses. Typing plays while waiting for a response and briefly as an answer arrives. Click it to open the bilingual resume assistant. Pause animation or use your operating system reduced-motion setting. This is a 2D sprite mascot, not a rigged 3D model.
-
-Before starting Docker, create a local `.env` from `.env.example` if you do not already have one. Set `OPENROUTER_API_KEY` and keep `OPENROUTER_MODEL=google/gemma-4-31b-it:free`. Do not overwrite an existing key. The key is injected only into the backend at runtime, excluded from Git and Docker build contexts, and never sent to the browser. Never prefix it with NEXT_PUBLIC_.
-
-The Docker Compose deployment exposes only the web service. Nginx forwards chat requests to the internal Node.js service. Local `npm run dev` or a static-only host shows the widget but does not provide the chat backend; use Docker Compose for the complete experience. The existing Sites static configuration does not deploy this backend.
-
-Users explicitly start chat before any message is sent to OpenRouter and its selected model provider. Conversations stay in browser memory and disappear on refresh. Up to four recent message pairs are forwarded for context. The service does not log messages or store conversations; OpenRouter/provider data policies still apply. AI answers may be inaccurate and should be checked against the resume.
-
-Public resume facts are maintained in `server/resume.mjs`. The assistant is instructed to answer only from these facts, decline unrelated questions, and acknowledge missing information. No PDF, private street address, or API key is included in the prompt. Keep this file in sync with future resume updates.
-
-The service allows only `openrouter/free` or model IDs ending in `:free`, with no paid fallback. Gemma remains primary; `OPENROUTER_FALLBACK_MODEL=openrouter/free` makes one fallback attempt only for provider-side temporary throttling or HTTP 502/503/504. Authentication, billing, privacy-policy, and account-wide quota failures are not retried through another model. Set the fallback variable to an empty value to disable it. Limits are 5 requests per IP/minute, 15 requests overall/minute, 40 per UTC day, and 3 concurrent requests. Each chat submission can use up to two provider requests when fallback occurs. Limits are in-memory per backend process and reset on restart; they are not an account-wide or persistent quota guarantee. Provider limits may be lower or shared with other applications. The API returns an error instead of inventing a reply when the provider is unavailable. For broader public traffic, add persistent abuse controls. Keep the backend port private and have any additional trusted reverse proxy pass the real client IP safely.
-
-The owner authorized a direct live OpenRouter smoke check for the Gemma model without Docker. Run `node --env-file=.env scripts/check-openrouter.mjs` to repeat the check (up to two provider requests); it uses the same payload builder as the backend and reports only status/model/grounding flags, never the key or response body. Docker and browser rendering have not been tested for this redesign.
-
-## Run with Docker
-
-Install Docker Desktop and make sure the Linux engine is running (not paused).
-
-```sh
-docker compose up --build -d
-```
-
-Open http://localhost:3000. The build compiles Next.js to a static export; the production container serves it using unprivileged Nginx. React interactions work in the browser. The portfolio is served by Nginx. A separate private Node.js service handles `/api/chat` and calls OpenRouter; the API key is required only for chat.
-
-```sh
-docker compose ps
-docker compose logs -f portfolio
-docker compose down
-```
-
-To change the host port, set `PORT` before starting Compose, or add `PORT=8080` to a local `.env` file.
+The legacy .openai/hosting.json describes a previous static hosting target and is not used by Vercel. Static-only hosting cannot run this chat API.
 
 ## Local development
 
-Requires Node.js 22 and npm.
+Requires Node.js 22. Copy .env.example to .env only if .env does not already exist, then enter your key.
 
-```sh
+~~~sh
 npm ci
 npm run dev
-```
+~~~
 
-Open http://localhost:3000. `npm run build` creates the production export in `out/`; `npm run typecheck` checks TypeScript.
+Open http://localhost:3000. Local development now includes the same chat API. npm run build creates the production Next.js output. npm run typecheck checks TypeScript.
 
-## Features
+## Optional Docker deployment
 
-- Animated resume cat with Thai/English AI chat through OpenRouter
-- Responsive navigation and layout
-- Project category filters and accessible project-detail dialogs
-- Dark/light theme with a saved browser preference
-- Email copy, email/phone links, and GitHub profile link
-- Keyboard focus states, skip link, native dialog focus handling, and reduced-motion support
+~~~sh
+docker compose up --build -d
+~~~
+
+Open http://localhost:3000. A single non-root Next.js standalone container serves the portfolio and API. Compose injects the environment variables at runtime. PORT in .env changes the host port. No Docker was run during the Vercel migration.
+
+## Bubble and API behavior
+
+Bubble has idle, blink and two laptop-typing sprite states. It supports reduced motion and an animation pause control. Visitors explicitly start chat before sending data to OpenRouter. Conversation history stays in browser memory; up to four recent message pairs are sent for context. The backend does not log or store conversations. Provider data policies still apply.
+
+Public resume facts and grounding instructions live in server/resume.mjs. The model is instructed to acknowledge missing information and decline unrelated questions. AI answers can still be inaccurate.
+
+Only free model IDs are allowed. Gemma is primary; one free fallback is attempted for provider throttling or HTTP 502/503/504. Account authentication, billing, policy and account-wide quota errors do not trigger fallback. An empty fallback variable disables fallback.
+
+Limits are 5 requests per IP/minute on Vercel, 15 per instance/minute, 40 per instance/UTC day and 3 concurrent requests per instance. Local/Docker traffic shares one client bucket because arbitrary forwarded IP headers are not trusted. Limits are in memory and reset on restart or cold start; multiple Vercel instances do not share counters. They are not a persistent account quota. Each submission may use two provider requests. Broader public traffic needs persistent rate limiting or platform firewall controls.
+
+## Validation
+
+Run mocked API tests without Docker:
+
+~~~sh
+node --test scripts/chat-handler.test.mjs scripts/openrouter.test.mjs
+~~~
+
+Vercel migration: 11 API tests passed. Local TypeScript checking is blocked by the incomplete Next.js dependency installation. Production build and deployed Vercel behavior must be verified after deployment.
+
+Previous live OpenRouter check: key authentication HTTP 200; Gemma provider throttled with HTTP 429; free fallback HTTP 200 with an answer matching the resume. Repeat a live check with node --env-file=.env scripts/check-openrouter.mjs (up to two provider requests). It reports status and grounding flags without printing the key or answer.
 
 ## Edit content
 
-- `app/page.tsx`: resume content, projects, skills, and interactions
-- `app/globals.css`: theme and responsive styles
-- `app/layout.tsx`: page metadata
+- app/page.tsx: resume, projects and skills
+- app/globals.css: layout and themes
+- app/ResumeChat.tsx: chat interface and mascot behavior
+- app/api/chat/route.ts: Next.js API entry point
+- server/chat-handler.mjs: request validation and limits
+- server/openrouter.mjs: provider requests and free fallback
+- server/resume.mjs: public resume facts
 
-Only the city/province is displayed on the page. The original resume PDF is excluded from this repository and the website. Project buttons describe resume projects; the GitHub action links to the profile because individual project repository URLs were not provided.
-
-The Docker image uses a multi-stage build, a non-root runtime, read-only filesystem, temporary `/tmp`, and a health check. Framework static export is configured in `next.config.ts`; server-side features would require a different deployment setup.
+The site includes theme switching, project filters, accessible dialogs, contact links and responsive layout. Project links are not invented; the GitHub link points to the supplied profile. Only the city is displayed, not a private street address.
