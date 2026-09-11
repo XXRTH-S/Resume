@@ -1,8 +1,8 @@
 import http from 'node:http';
-import { systemPrompt } from './resume.mjs';
+import { completionBody, defaultModel } from './openrouter.mjs';
 
 const key = process.env.OPENROUTER_API_KEY?.trim();
-const model = process.env.OPENROUTER_MODEL?.trim() || 'openrouter/free';
+const model = process.env.OPENROUTER_MODEL?.trim() || defaultModel;
 const freeModel = model === 'openrouter/free' || model.endsWith(':free');
 const clients = new Map();
 let minute = { start: Date.now(), count: 0 };
@@ -55,8 +55,8 @@ const server = http.createServer(async (req, res) => {
   try {
     const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST', signal: controller.signal,
-      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'X-OpenRouter-Title': 'Suteemon Portfolio Cat' },
-      body: JSON.stringify({ model, messages: [{ role: 'system', content: systemPrompt }, ...messages.map(({ role, content }) => ({ role, content }))], stream: false, max_tokens: 650, temperature: 0.2 }),
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'X-OpenRouter-Title': 'Bubble Resume Assistant' },
+      body: JSON.stringify(completionBody(messages, model)),
     });
     if (!upstream.ok) return json(res, upstream.status === 429 ? 429 : 503, { error: 'โมเดลฟรีไม่พร้อมหรือโควตาหมด กรุณาลองภายหลัง / The free model is unavailable or its quota is exhausted. Please try later.' });
     const result = await upstream.json();

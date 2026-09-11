@@ -51,7 +51,7 @@ export default function ResumeChat() {
       setError(request.signal.aborted ? 'หมดเวลารอ กรุณาลองใหม่ / Request timed out. Please try again.' : reason instanceof Error ? reason.message : 'เกิดข้อผิดพลาด / Something went wrong.');
     } finally { clearTimeout(timer); controller.current = null; setPending(''); }
   }
-  const mood = pending ? 'thinking' : talking ? 'speaking' : 'idle';
+  const mood = pending || talking ? 'typing' : 'idle';
   return <aside className={`resume-chat ${motion ? '' : 'still'}`} aria-label="Bubble resume chatbot">
     {open && <section className="chat-panel" aria-labelledby="chat-heading" onKeyDown={event => { if (event.key === 'Escape') close(); }}>
       <div className="chat-header"><div><h2 id="chat-heading">Bubble <span>AI</span></h2><p>ถามเรื่องงาน ทักษะ และผลงาน · TH / EN</p></div><button className="icon-button" onClick={close} aria-label="Close chat"><X size={20}/></button></div>
@@ -59,7 +59,7 @@ export default function ResumeChat() {
       <div className="chat-log" ref={log} role="log" aria-live="polite" aria-relevant="additions text">
         <div className="chat-bubble assistant">สวัสดีค่ะ 🐾 ฉันชื่อ Bubble เป็นผู้ช่วย AI ของ Suteemon ถามเกี่ยวกับประสบการณ์ ทักษะ หรือผลงานได้ทั้งภาษาไทยและอังกฤษค่ะ<br/><br/>Hi! I’m Bubble. Ask me about Suteemon’s resume in Thai or English.</div>
         {messages.map((message, index) => <div key={index} className={`chat-bubble ${message.role}`}><span className="sr-only">{message.role === 'user' ? 'You: ' : 'AI: '}</span>{message.content}</div>)}
-        {pending && <><div className="chat-bubble user">{pending}</div><div className="chat-bubble assistant thinking-label">กำลังอ่านเรซูเม่… / Thinking…</div></>}
+        {pending && <><div className="chat-bubble user">{pending}</div><div className="chat-bubble assistant thinking-label">Bubble กำลังพิมพ์คำตอบ… / Bubble is typing…</div></>}
       </div>
       {!consent ? <div className="chat-consent"><p>เมื่อเริ่มแชท คำถามและประวัติสนทนาล่าสุดจะถูกส่งไปยัง OpenRouter และผู้ให้บริการโมเดลเพื่อสร้างคำตอบ ไม่ควรใส่ข้อมูลลับ<br/><br/>Starting chat sends your questions and recent conversation to OpenRouter and its model provider. Do not include secrets.</p><button className="button primary" onClick={() => setConsent(true)}>เริ่มแชท / Start chat</button></div> : <>
         {messages.length === 0 && !pending && <div className="chat-suggestions">{questions.map(question => <button key={question} onClick={() => send(question)}>{question}</button>)}</div>}

@@ -20,7 +20,7 @@ services:
       dockerfile: server/Dockerfile
     environment:
       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
-      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-openrouter/free}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-google/gemma-4-31b-it:free}
     restart: unless-stopped
     read_only: true
     security_opt:

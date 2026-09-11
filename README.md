@@ -14,9 +14,11 @@ Previous validation: Docker Compose configuration validation passed. Production 
 
 ## Bubble chatbot
 
-The animated 2D black-cat mascot has four sprite states: idle, blink, thinking, and greeting/speaking. Click it to open the bilingual resume assistant. Pause animation or use your operating system reduced-motion setting. This is a 2D sprite mascot, not a rigged 3D model.
+Latest check (2026-09-11): two direct requests to `google/gemma-4-31b-it:free` returned HTTP 429 with no answer. The second attempt was made after a pause. A successful completion is not yet verified; no paid or alternate model was selected. Backend JavaScript syntax checks passed. No Docker or frontend build was run for this update.
 
-Before starting Docker, create a local `.env` from `.env.example` if you do not already have one. Set `OPENROUTER_API_KEY` and keep `OPENROUTER_MODEL=openrouter/free`. Do not overwrite an existing key. The key is injected only into the backend at runtime, excluded from Git and Docker build contexts, and never sent to the browser. Never prefix it with NEXT_PUBLIC_.
+Bubble is a newly designed fluffy charcoal-gray kitten with four sprite states: idle, blink, and two alternating laptop-typing poses. Typing plays while waiting for a response and briefly as an answer arrives. Click it to open the bilingual resume assistant. Pause animation or use your operating system reduced-motion setting. This is a 2D sprite mascot, not a rigged 3D model.
+
+Before starting Docker, create a local `.env` from `.env.example` if you do not already have one. Set `OPENROUTER_API_KEY` and keep `OPENROUTER_MODEL=google/gemma-4-31b-it:free`. Do not overwrite an existing key. The key is injected only into the backend at runtime, excluded from Git and Docker build contexts, and never sent to the browser. Never prefix it with NEXT_PUBLIC_.
 
 The Docker Compose deployment exposes only the web service. Nginx forwards chat requests to the internal Node.js service. Local `npm run dev` or a static-only host shows the widget but does not provide the chat backend; use Docker Compose for the complete experience. The existing Sites static configuration does not deploy this backend.
 
@@ -26,7 +28,7 @@ Public resume facts are maintained in `server/resume.mjs`. The assistant is inst
 
 The service allows only `openrouter/free` or model IDs ending in `:free`, with no paid fallback. Limits are 5 requests per IP/minute, 15 requests overall/minute, 40 per UTC day, and 3 concurrent requests. Limits are in-memory per backend process and reset on restart; they are not an account-wide or persistent quota guarantee. Provider limits may be lower or shared with other applications. The API returns an error instead of inventing a reply when the provider is unavailable. For broader public traffic, add persistent abuse controls. Keep the backend port private and have any additional trusted reverse proxy pass the real client IP safely.
 
-Implementation was reviewed as source only per the owner's no-run instruction. No build, container run, or live OpenRouter request has been performed for this feature, so the configured key and provider response have not been verified.
+The owner authorized a direct live OpenRouter smoke check for the Gemma model without Docker. Run `node --env-file=.env scripts/check-openrouter.mjs` to repeat the one-request check; it uses the same payload builder as the backend and reports only status/model/grounding flags, never the key or response body. Docker and browser rendering have not been tested for this redesign.
 
 ## Run with Docker
 
