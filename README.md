@@ -2,9 +2,15 @@
 
 Portfolio built with Next.js App Router, React, TypeScript, and Lucide icons. Content is based on the supplied resume, without invented project links or achievements.
 
+## Resume update
+
+Content updated from the latest supplied resume on 2026-09-11: current Full-Stack Developer role at Bangkok Expressway and Metro Public Company Limited, Bangkok location, and English proficiency listed as Good. Existing education, skills, KCE experience, and project details are retained. No PDF is included.
+
 ## Validation status
 
-Docker Compose configuration validation passed. Production build and container runtime testing are not yet completed: dependency downloads were interrupted due to slow network access. The initial TypeScript check reported missing Next.js package/type declarations while installation was incomplete. This source is committed for handoff at the owner's request; successful production operation has not yet been verified.
+The 2026-09-11 content update was reviewed as a source diff only; no app, build, tests, or containers were run, as requested.
+
+Previous validation: Docker Compose configuration validation passed. Production build and container runtime testing are not yet completed: dependency downloads were interrupted due to slow network access. The initial TypeScript check reported missing Next.js package/type declarations while installation was incomplete. This source is committed for handoff at the owner's request; successful production operation has not yet been verified.
 
 ## Run with Docker
 
