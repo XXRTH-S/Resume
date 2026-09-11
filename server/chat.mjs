@@ -1,9 +1,10 @@
 import http from 'node:http';
-import { completionBody, defaultModel } from './openrouter.mjs';
+import { requestCompletion, defaultModel, defaultFallbackModel, isFreeModel } from './openrouter.mjs';
 
 const key = process.env.OPENROUTER_API_KEY?.trim();
 const model = process.env.OPENROUTER_MODEL?.trim() || defaultModel;
-const freeModel = model === 'openrouter/free' || model.endsWith(':free');
+const fallbackModel = process.env.OPENROUTER_FALLBACK_MODEL?.trim() ?? defaultFallbackModel;
+const freeModel = isFreeModel(model) && (!fallbackModel || isFreeModel(fallbackModel));
 const clients = new Map();
 let minute = { start: Date.now(), count: 0 };
 let day = { date: new Date().toISOString().slice(0, 10), count: 0 };
@@ -53,11 +54,7 @@ const server = http.createServer(async (req, res) => {
   const timer = setTimeout(() => controller.abort(), 45000);
   res.on('close', () => { if (!res.writableEnded) controller.abort(); });
   try {
-    const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST', signal: controller.signal,
-      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'X-OpenRouter-Title': 'Bubble Resume Assistant' },
-      body: JSON.stringify(completionBody(messages, model)),
-    });
+    const { response: upstream } = await requestCompletion({ key, messages, model, fallbackModel, signal: controller.signal });
     if (!upstream.ok) return json(res, upstream.status === 429 ? 429 : 503, { error: 'โมเดลฟรีไม่พร้อมหรือโควตาหมด กรุณาลองภายหลัง / The free model is unavailable or its quota is exhausted. Please try later.' });
     const result = await upstream.json();
     const answer = result.choices?.[0]?.message?.content;

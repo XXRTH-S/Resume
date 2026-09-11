@@ -14,7 +14,7 @@ Previous validation: Docker Compose configuration validation passed. Production 
 
 ## Bubble chatbot
 
-Latest check (2026-09-11): two direct requests to `google/gemma-4-31b-it:free` returned HTTP 429 with no answer. The second attempt was made after a pause. A successful completion is not yet verified; no paid or alternate model was selected. Backend JavaScript syntax checks passed. No Docker or frontend build was run for this update.
+Latest check (2026-09-11): key authentication returned HTTP 200. Gemma returned provider-side HTTP 429 from Google AI Studio. The updated backend request helper automatically selected a free fallback and returned HTTP 200 with an answer matching the resume (nex-agi/nex-n2.5-pro:free). Seven mocked routing tests passed. No Docker, frontend build, or browser run was performed.
 
 Bubble is a newly designed fluffy charcoal-gray kitten with four sprite states: idle, blink, and two alternating laptop-typing poses. Typing plays while waiting for a response and briefly as an answer arrives. Click it to open the bilingual resume assistant. Pause animation or use your operating system reduced-motion setting. This is a 2D sprite mascot, not a rigged 3D model.
 
@@ -26,9 +26,9 @@ Users explicitly start chat before any message is sent to OpenRouter and its sel
 
 Public resume facts are maintained in `server/resume.mjs`. The assistant is instructed to answer only from these facts, decline unrelated questions, and acknowledge missing information. No PDF, private street address, or API key is included in the prompt. Keep this file in sync with future resume updates.
 
-The service allows only `openrouter/free` or model IDs ending in `:free`, with no paid fallback. Limits are 5 requests per IP/minute, 15 requests overall/minute, 40 per UTC day, and 3 concurrent requests. Limits are in-memory per backend process and reset on restart; they are not an account-wide or persistent quota guarantee. Provider limits may be lower or shared with other applications. The API returns an error instead of inventing a reply when the provider is unavailable. For broader public traffic, add persistent abuse controls. Keep the backend port private and have any additional trusted reverse proxy pass the real client IP safely.
+The service allows only `openrouter/free` or model IDs ending in `:free`, with no paid fallback. Gemma remains primary; `OPENROUTER_FALLBACK_MODEL=openrouter/free` makes one fallback attempt only for provider-side temporary throttling or HTTP 502/503/504. Authentication, billing, privacy-policy, and account-wide quota failures are not retried through another model. Set the fallback variable to an empty value to disable it. Limits are 5 requests per IP/minute, 15 requests overall/minute, 40 per UTC day, and 3 concurrent requests. Each chat submission can use up to two provider requests when fallback occurs. Limits are in-memory per backend process and reset on restart; they are not an account-wide or persistent quota guarantee. Provider limits may be lower or shared with other applications. The API returns an error instead of inventing a reply when the provider is unavailable. For broader public traffic, add persistent abuse controls. Keep the backend port private and have any additional trusted reverse proxy pass the real client IP safely.
 
-The owner authorized a direct live OpenRouter smoke check for the Gemma model without Docker. Run `node --env-file=.env scripts/check-openrouter.mjs` to repeat the one-request check; it uses the same payload builder as the backend and reports only status/model/grounding flags, never the key or response body. Docker and browser rendering have not been tested for this redesign.
+The owner authorized a direct live OpenRouter smoke check for the Gemma model without Docker. Run `node --env-file=.env scripts/check-openrouter.mjs` to repeat the check (up to two provider requests); it uses the same payload builder as the backend and reports only status/model/grounding flags, never the key or response body. Docker and browser rendering have not been tested for this redesign.
 
 ## Run with Docker
 
