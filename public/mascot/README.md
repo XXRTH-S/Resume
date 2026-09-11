@@ -1,8 +1,10 @@
-# Resume Cat artwork
+# Bubble artwork
 
 Generated with the built-in Imagegen tool from the two owner-supplied black-cat reference images. No source reference photos or resume PDF are committed.
 
 At the owner's request, the original transparent atlas was recolored with a script: white inner ears and pastel-pink noses in all four frames. Frame positions and dimensions are unchanged; every alpha value was verified identical to the original. The prompt below records the initial generation, before this recolor.
+
+The cream eye areas were subsequently recolored white, retaining black pupils, outlines, pink noses, and identical alpha values in every frame. Bubble uses a soft white CSS drop shadow, with an 80px sprite on mobile and a 124px sprite on desktop.
 
 `cat-atlas.png` is a transparent 2 x 2 sprite atlas. Cells in reading order: idle, closed eyes, thinking, greeting/speaking. `app/chat.css` selects cells using background-position and animates the sprite. It is a 2D mascot, not a 3D or Live2D rig.
 

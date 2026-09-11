@@ -52,12 +52,12 @@ export default function ResumeChat() {
     } finally { clearTimeout(timer); controller.current = null; setPending(''); }
   }
   const mood = pending ? 'thinking' : talking ? 'speaking' : 'idle';
-  return <aside className={`resume-chat ${motion ? '' : 'still'}`} aria-label="Resume chatbot">
+  return <aside className={`resume-chat ${motion ? '' : 'still'}`} aria-label="Bubble resume chatbot">
     {open && <section className="chat-panel" aria-labelledby="chat-heading" onKeyDown={event => { if (event.key === 'Escape') close(); }}>
-      <div className="chat-header"><div><h2 id="chat-heading">Resume Cat <span>AI</span></h2><p>ถามเรื่องงาน ทักษะ และผลงาน · TH / EN</p></div><button className="icon-button" onClick={close} aria-label="Close chat"><X size={20}/></button></div>
+      <div className="chat-header"><div><h2 id="chat-heading">Bubble <span>AI</span></h2><p>ถามเรื่องงาน ทักษะ และผลงาน · TH / EN</p></div><button className="icon-button" onClick={close} aria-label="Close chat"><X size={20}/></button></div>
       <div className="chat-tools"><button onClick={() => setMotion(!motion)} aria-pressed={!motion}>{motion ? <Pause size={14}/> : <Play size={14}/>} {motion ? 'หยุดขยับ / Pause' : 'ขยับ / Animate'}</button><button disabled={!!pending} onClick={() => { setMessages([]); setError(''); setDraft(''); setTalking(false); input.current?.focus(); }}><Trash2 size={14}/> ล้างแชท / Clear</button></div>
       <div className="chat-log" ref={log} role="log" aria-live="polite" aria-relevant="additions text">
-        <div className="chat-bubble assistant">สวัสดีค่ะ 🐾 ฉันเป็นผู้ช่วย AI ของ Suteemon ถามเกี่ยวกับประสบการณ์ ทักษะ หรือผลงานได้ทั้งภาษาไทยและอังกฤษค่ะ<br/><br/>Hi! Ask me about Suteemon’s resume in Thai or English.</div>
+        <div className="chat-bubble assistant">สวัสดีค่ะ 🐾 ฉันชื่อ Bubble เป็นผู้ช่วย AI ของ Suteemon ถามเกี่ยวกับประสบการณ์ ทักษะ หรือผลงานได้ทั้งภาษาไทยและอังกฤษค่ะ<br/><br/>Hi! I’m Bubble. Ask me about Suteemon’s resume in Thai or English.</div>
         {messages.map((message, index) => <div key={index} className={`chat-bubble ${message.role}`}><span className="sr-only">{message.role === 'user' ? 'You: ' : 'AI: '}</span>{message.content}</div>)}
         {pending && <><div className="chat-bubble user">{pending}</div><div className="chat-bubble assistant thinking-label">กำลังอ่านเรซูเม่… / Thinking…</div></>}
       </div>
@@ -68,6 +68,6 @@ export default function ResumeChat() {
       </>}
       <p className="chat-note">AI อาจตอบผิดได้ โปรดตรวจเทียบเรซูเม่ · AI can make mistakes. <a href="mailto:Suteemon_Yodying@hotmail.com">Contact Suteemon</a></p>
     </section>}
-    <button ref={launcher} className="cat-launcher" aria-expanded={open} aria-label={open ? 'Close resume chat' : 'Open resume chat'} onClick={() => open ? close() : setOpen(true)}><span className={`cat-sprite ${mood}`} aria-hidden="true"/><span className="cat-caption"><MessageCircle size={15}/>{open ? 'Resume Cat' : 'ถามน้องแมว / Ask me'}</span></button>
+    <button ref={launcher} className="cat-launcher" aria-expanded={open} aria-label={open ? 'Close Bubble chat' : 'Open Bubble chat'} onClick={() => open ? close() : setOpen(true)}><span className={`cat-sprite ${mood}`} aria-hidden="true"/><span className="cat-caption"><MessageCircle size={15}/>{open ? 'Bubble' : 'Ask Bubble'}</span></button>
   </aside>;
 }

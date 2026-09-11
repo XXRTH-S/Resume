@@ -12,7 +12,7 @@ The 2026-09-11 content update was reviewed as a source diff only; no app, build,
 
 Previous validation: Docker Compose configuration validation passed. Production build and container runtime testing are not yet completed: dependency downloads were interrupted due to slow network access. The initial TypeScript check reported missing Next.js package/type declarations while installation was incomplete. This source is committed for handoff at the owner's request; successful production operation has not yet been verified.
 
-## Resume Cat chatbot
+## Bubble chatbot
 
 The animated 2D black-cat mascot has four sprite states: idle, blink, thinking, and greeting/speaking. Click it to open the bilingual resume assistant. Pause animation or use your operating system reduced-motion setting. This is a 2D sprite mascot, not a rigged 3D model.
 
