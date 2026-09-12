@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import ResumeChat from './ResumeChat';
+import SystemExplorer from './SystemExplorer';
 import { ArrowDown, ArrowUpRight, Check, Code2, Copy, Database, Github, Layers, Mail, MapPin, Menu, Moon, Smartphone, Sun, Terminal, Users, X } from 'lucide-react';
 
 const projects = [
@@ -12,8 +13,6 @@ const projects = [
 ];
 const softSkills = ['Self learning', 'Quick learner', 'Attention to detail', 'Team collaboration', 'Adaptability'];
 const coreStack = ['TypeScript', 'JavaScript', 'Node.js', 'C#', '.NET', 'SQL', 'Flutter', 'HTML', 'CSS', 'Docker'];
-const developerStack = ['React', ...coreStack];
-const stackRows = Array.from({ length: Math.ceil(developerStack.length / 2) }, (_, i) => developerStack.slice(i * 2, i * 2 + 2));
 const skills = [
   { title: 'Frontend & mobile', icon: Code2, items: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Dart + Flutter', 'Vite'] },
   { title: 'Backend & data', icon: Database, items: ['Node.js', 'Express', 'Prisma', 'SQL', 'SQL Server', 'MySQL', 'PHP', 'Laravel', '.NET', 'Python', 'C', 'C#', 'Java'] },
@@ -21,6 +20,12 @@ const skills = [
   { title: 'Tools & workflow', icon: Terminal, items: ['Docker', 'Git', 'VS Code', 'Visual Studio', 'Android Studio', 'Unity', 'SSMS', 'Canva', 'Microsoft Office', 'Antigravity', 'Windsurf'] },
 ];
 export default function Home() {
+  const [activeSection, setActiveSection] = useState('');
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => { for (const entry of entries) if (entry.isIntersecting) setActiveSection(entry.target.id); }, { rootMargin: '-20% 0px -50% 0px' });
+    document.querySelectorAll('main section[id]').forEach(section => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
   const [filter, setFilter] = useState('All');
   const [selected, setSelected] = useState<(typeof projects)[number] | null>(null);
   const [light, setLight] = useState(false);
@@ -37,13 +42,13 @@ export default function Home() {
     <ResumeChat/>
     <a className="skip" href="#main">Skip to content</a>
     <header className="header"><a href="#" className="logo" aria-label="Suteemon home">sy<span>.</span></a>
-      <nav aria-label="Main navigation" className={menu ? 'nav open' : 'nav'}>{['Work', 'About', 'Skills', 'Contact'].map(item => <a key={item} href={'#' + item.toLowerCase()} onClick={() => setMenu(false)}>{item}</a>)}</nav>
+      <nav aria-label="Main navigation" className={menu ? 'nav open' : 'nav'}>{['Work', 'About', 'Skills', 'Contact'].map(item => <a key={item} href={'#' + item.toLowerCase()} aria-current={activeSection === item.toLowerCase() ? 'location' : undefined} onClick={() => setMenu(false)}>{item}</a>)}</nav>
       <div className="header-actions"><button className="icon-button" onClick={toggleTheme} aria-label={light ? 'Switch to dark theme' : 'Switch to light theme'}>{light ? <Moon size={19}/> : <Sun size={19}/>}</button><a className="github-link" href="https://github.com/XXRTH-S" target="_blank" rel="noreferrer"><Github size={18}/> GitHub <ArrowUpRight size={15}/></a><button className="icon-button mobile-menu" aria-label="Toggle navigation" aria-expanded={menu} onClick={() => setMenu(!menu)}>{menu ? <X/> : <Menu/>}</button></div>
     </header>
     <main id="main">
       <section className="hero wrap">
-        <div className="hero-copy"><div className="eyebrow"><span className="little-line"/> FULL-STACK DEVELOPER</div><p className="intro">Hello, I’m Suteemon.</p><h1>Thoughtful code.<br/><span>Useful experiences.</span></h1><p className="hero-description">I build and maintain web and mobile applications, from databases to user interfaces. Currently a Full-Stack Developer at Bangkok Expressway and Metro.</p><div className="hero-buttons"><a className="button primary" href="#work">Explore my work <ArrowDown size={18}/></a><a className="button secondary" href="#contact">Get in touch <Mail size={18}/></a></div><div className="location"><MapPin size={15}/> Bangkok, Thailand <span> / </span> Web · Mobile · Full-stack</div></div>
-        <div className="dev-card"><div className="editor-top"><span className="editor-dots"><i/><i/><i/></span><span>developer.ts</span><Code2 size={16}/></div><div className="code"><div><span className="line-number">01</span><span className="purple">const</span> developer = {'{'}</div><div><span className="line-number">02</span>  name: <span className="green">'Suteemon Yodying'</span>,</div><div><span className="line-number">03</span>  focus: <span className="green">'Full-stack development'</span>,</div><div><span className="line-number">04</span>  stack: [</div>{stackRows.map((row, index) => <div key={index}><span className="line-number">{String(index + 5).padStart(2, '0')}</span>{'    '}{row.map((item, itemIndex) => <span key={item}><span className="green">{'\'' + item + '\''}</span>{index * 2 + itemIndex < developerStack.length - 1 ? ', ' : ''}</span>)}</div>)}<div><span className="line-number">{String(stackRows.length + 5).padStart(2, '0')}</span>  ],</div><div><span className="line-number">{String(stackRows.length + 6).padStart(2, '0')}</span>  mindset: <span className="green">'Always learning'</span></div><div><span className="line-number">{String(stackRows.length + 7).padStart(2, '0')}</span>{'};'}</div></div><div className="editor-bottom"><Terminal size={15}/><span>From database design to user interface.</span><span className="cursor"/></div><div className="card-caption"><span>BUILT WITH CURIOSITY</span><span>01 / PORTFOLIO</span></div></div>
+        <div className="hero-copy"><div className="eyebrow"><span className="little-line"/> FULL-STACK DEVELOPMENT / AI EXPLORATION</div><p className="intro">Hello, I’m Suteemon.</p><h1>From complex systems.<br/><span>To clear experiences.</span></h1><p className="hero-description">I build and maintain web and mobile applications, from databases to user interfaces. Currently a Full-Stack Developer at Bangkok Expressway and Metro.</p><div className="hero-buttons"><a className="button primary" href="#work">Explore my work <ArrowDown size={18}/></a><a className="button secondary" href="#contact">Get in touch <Mail size={18}/></a></div><div className="location"><MapPin size={15}/> Bangkok, Thailand <span> / </span> Web · Mobile · Full-stack</div></div>
+        <SystemExplorer/>
       </section>
       <div className="stack-bar"><div className="wrap"><span>MY CORE STACK</span>{coreStack.map(s => <strong key={s}>{s}</strong>)}</div></div>
       <section id="work" className="section wrap"><div className="section-heading"><div><div className="eyebrow">01 / SELECTED WORK</div><h2>Ideas, turned into applications<span>.</span></h2></div><p>Web platforms, mobile experiences,<br/>and the systems behind them.</p></div><div className="filters" aria-label="Filter projects">{['All', 'Web', 'Mobile', 'Game'].map(f => <button key={f} aria-pressed={f === filter} onClick={() => setFilter(f)}>{f}{f === 'All' && <span>04</span>}</button>)}</div><div className="project-grid" aria-live="polite">{projects.filter(p => filter === 'All' || p.category === filter).map(p => <button className={'project-card project-' + p.id} key={p.id} onClick={() => setSelected(p)} aria-haspopup="dialog"><div className="project-top"><span>{p.category.toUpperCase()} / {p.year}</span><ArrowUpRight size={22}/></div><div className="project-visual"><p.icon size={38} strokeWidth={1.25}/><span>{p.id}</span></div><div className="project-content"><span className="project-type">{p.type}</span><h3>{p.name}</h3><p>{p.description}</p><div className="tags">{p.tags.map(t => <span key={t}>{t}</span>)}</div><div className="project-bottom">Explore project <ArrowUpRight size={17}/></div></div></button>)}</div></section>
