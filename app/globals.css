@@ -23,3 +23,5 @@ body{font-family:Inter,'Segoe UI',Arial,sans-serif;line-height:1.75;background-i
 .journey .timeline-group-heading{margin:38px 0 25px;padding-top:26px;border-top:1px solid var(--border);font-size:18px}
 .logo{letter-spacing:-1.5px}
 @media(prefers-reduced-motion:reduce){.light-following:after{background:radial-gradient(ellipse at 85% 5%,color-mix(in srgb,var(--accent) 5%,transparent),transparent 65%)}*::after{transition:none!important}}
+.filters{max-width:100%;flex-wrap:wrap}.project-05 .project-visual{color:var(--accent)}
+@media(max-width:420px){.filters button{padding-inline:11px}.filters button span{margin-left:5px}}

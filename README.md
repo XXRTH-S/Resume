@@ -74,3 +74,7 @@ Previous live OpenRouter check: key authentication HTTP 200; Gemma provider thro
 - server/resume.mjs: public resume facts
 
 The site includes theme switching, project filters, accessible dialogs, contact links and responsive layout. Project links are not invented; the GitHub link points to the supplied profile. Only the city is displayed, not a private street address.
+
+### Adding future AI projects
+
+Project entries are maintained in `app/projects.ts`. Add an entry with category `AI`, a unique id, the actual year, technologies, description, and implementation details. Set `repositoryUrl` to the published GitHub repository when available. Category counts update automatically; do not list planned work as completed. Bubble is the first AI integration project and links to this repository.
