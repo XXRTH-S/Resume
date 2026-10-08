@@ -25,3 +25,10 @@ body{font-family:Inter,'Segoe UI',Arial,sans-serif;line-height:1.75;background-i
 @media(prefers-reduced-motion:reduce){.light-following:after{background:radial-gradient(ellipse at 85% 5%,color-mix(in srgb,var(--accent) 5%,transparent),transparent 65%)}*::after{transition:none!important}}
 .filters{max-width:100%;flex-wrap:wrap}.project-05 .project-visual{color:var(--accent)}
 @media(max-width:420px){.filters button{padding-inline:11px}.filters button span{margin-left:5px}}
+/* Give the hero copy breathing room without narrowing small screens too far. */
+.hero-copy{padding:24px;border-radius:16px}
+.hero-copy .intro{margin-top:34px;margin-bottom:18px}
+.hero-copy .hero-description{margin-top:32px;margin-bottom:36px}
+.hero-copy .location{margin-top:36px}
+@media(max-width:760px){.hero{padding-top:76px;row-gap:56px}.hero-copy{padding:20px}.hero-copy .intro{margin-top:30px}}
+@media(max-width:420px){.hero{padding-top:64px;row-gap:44px}.hero-copy{padding:16px 10px}.hero-copy .hero-description{margin-block:28px 32px}}
