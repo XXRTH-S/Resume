@@ -25,11 +25,11 @@ export default function Home() {
   }, []);
   const [filter, setFilter] = useState('All');
   const [selected, setSelected] = useState<(typeof projects)[number] | null>(null);
-  const [light, setLight] = useState(false);
+  const [light, setLight] = useState(true);
   const [menu, setMenu] = useState(false);
   const [copied, setCopied] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
-  useEffect(() => { try { setLight(localStorage.getItem('portfolio-theme') === 'light'); } catch {} }, []);
+  useEffect(() => { try { setLight(localStorage.getItem('portfolio-theme') !== 'dark'); } catch {} }, []);
   useEffect(() => { document.documentElement.dataset.theme = light ? 'light' : 'dark'; }, [light]);
   useEffect(() => { if (selected) { dialog.current?.showModal(); const original = document.body.style.overflow; document.body.style.overflow = 'hidden'; return () => { document.body.style.overflow = original; }; } }, [selected]);
   function closeProject() { dialog.current?.close(); setSelected(null); }
