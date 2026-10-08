@@ -78,3 +78,9 @@ The site includes theme switching, project filters, accessible dialogs, contact 
 ### Adding future AI projects
 
 Project entries are maintained in `app/projects.ts`. Add an entry with category `AI`, a unique id, the actual year, technologies, description, and implementation details. Set `repositoryUrl` to the published GitHub repository when available. Category counts update automatically; do not list planned work as completed. Bubble is the first AI integration project and links to this repository.
+
+### Bubble answer grounding (2026-10-08)
+
+Common standalone questions about the current role, C#/.NET evidence, and Bubble versus Rag playground use reviewed answers in `server/verified-answers.mjs`. Compound questions and ambiguous follow-ups continue to the model. The prompt distinguishes employer facts, skills, project capabilities, and unknown details; requests sources and natural Thai; and treats earlier assistant messages as untrusted evidence. Generation temperature is 0, which reduces variation but does not guarantee accuracy.
+
+Validation: 16 automated tests passed. Four live model probes confirmed the need for reviewed answers: generated Thai contained mixed-language artifacts and one project comparison omitted repository links. General model answers can still have these limitations. `scripts/evaluate-bubble.mjs` evaluates the raw model, bypassing reviewed answers, and its heuristic checks require human review. It makes up to eight provider requests and never prints keys. No Docker or local build was run.

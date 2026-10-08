@@ -9,7 +9,7 @@ export function completionBody(messages, model = defaultModel) {
     messages: [{ role: 'system', content: systemPrompt }, ...messages.map(({ role, content }) => ({ role, content }))],
     stream: false,
     max_tokens: 650,
-    temperature: 0.2,
+    temperature: 0,
     reasoning: { enabled: false },
   };
 }

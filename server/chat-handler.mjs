@@ -1,4 +1,5 @@
 import { requestCompletion, defaultModel, defaultFallbackModel, isFreeModel } from './openrouter.mjs';
+import { verifiedAnswer } from './verified-answers.mjs';
 
 export function createChatHandler(complete = requestCompletion, env = process.env) {
   const key = env.OPENROUTER_API_KEY?.trim();
@@ -43,6 +44,8 @@ export function createChatHandler(complete = requestCompletion, env = process.en
     if (!reserve(env.VERCEL === '1' ? (req.headers.get('x-vercel-forwarded-for') || 'unknown') : 'local')) {
       return json(429, { error: 'พักสักครู่แล้วลองใหม่ หากโควตาวันนี้หมด กรุณาติดต่อทางอีเมล / Please try later or contact by email.' });
     }
+    const verified = verifiedAnswer(messages);
+    if (verified) return json(200, { answer: verified });
     active++;
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 45000);
