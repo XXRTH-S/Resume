@@ -7,7 +7,7 @@ const layers = [
   { title: 'Interface', label: '01 / EXPERIENCE', icon: Code2, tools: 'React · TypeScript · Flutter', description: 'Web and mobile interfaces with responsive layouts, accessible controls, and application interactions.', snippet: 'interface → interaction → experience' },
   { title: 'Services', label: '02 / APPLICATION', icon: Layers, tools: 'Node.js · C# · .NET', description: 'Backend development covering authentication, role-based workflows, system integrations, and APIs.', snippet: 'request → validate → respond' },
   { title: 'Data', label: '03 / FOUNDATION', icon: Database, tools: 'SQL Server · Prisma · Docker', description: 'Database design, queries, reporting, and application deployment with Docker.', snippet: 'model → query → insight' },
-  { title: 'AI', label: '04 / THIS PORTFOLIO', icon: Sparkles, tools: 'Bubble · OpenRouter · Next.js', description: 'Meet Bubble, this portfolio’s resume assistant. A server-side API connects questions to a language model using public resume context.', snippet: 'question → resume context → answer' },
+  { title: 'AI', label: '04 / AI PROJECTS', icon: Sparkles, tools: 'Bubble · Rag playground', description: 'Bubble answers questions using public resume context through OpenRouter. Rag playground combines document OCR and hybrid search to answer Thai questions with source citations, using FastAPI, pgvector, and Next.js.', snippet: 'documents → retrieval → cited answers' },
 ];
 
 export default function SystemExplorer() {
