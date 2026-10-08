@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { MessageCircle, Pause, Play, Send, Trash2, X } from 'lucide-react';
+import ChatMarkdown from './ChatMarkdown';
 import './chat.css';
 
 type Message = { role: 'user' | 'assistant'; content: string };
@@ -58,7 +59,7 @@ export default function ResumeChat() {
       <div className="chat-tools"><button onClick={() => setMotion(!motion)} aria-pressed={!motion}>{motion ? <Pause size={14}/> : <Play size={14}/>} {motion ? 'หยุดขยับ / Pause' : 'ขยับ / Animate'}</button><button disabled={!!pending} onClick={() => { setMessages([]); setError(''); setDraft(''); setTalking(false); input.current?.focus(); }}><Trash2 size={14}/> ล้างแชท / Clear</button></div>
       <div className="chat-log" ref={log} role="log" aria-live="polite" aria-relevant="additions text">
         <div className="chat-bubble assistant">สวัสดีค่ะ 🐾 ฉันชื่อ Bubble เป็นผู้ช่วย AI ของ Suteemon ถามเกี่ยวกับประสบการณ์ ทักษะ หรือผลงานได้ทั้งภาษาไทยและอังกฤษค่ะ<br/><br/>Hi! I’m Bubble. Ask me about Suteemon’s resume in Thai or English.</div>
-        {messages.map((message, index) => <div key={index} className={`chat-bubble ${message.role}`}><span className="sr-only">{message.role === 'user' ? 'You: ' : 'AI: '}</span>{message.content}</div>)}
+        {messages.map((message, index) => <div key={index} className={`chat-bubble ${message.role}`}><span className="sr-only">{message.role === 'user' ? 'You: ' : 'AI: '}</span>{message.role === 'assistant' ? <ChatMarkdown>{message.content}</ChatMarkdown> : message.content}</div>)}
         {pending && <><div className="chat-bubble user">{pending}</div><div className="chat-bubble assistant thinking-label">Bubble กำลังพิมพ์คำตอบ… / Bubble is typing…</div></>}
       </div>
       {!consent ? <div className="chat-consent"><p>เมื่อเริ่มแชท คำถามและประวัติสนทนาล่าสุดจะถูกส่งไปยัง OpenRouter และผู้ให้บริการโมเดลเพื่อสร้างคำตอบ ไม่ควรใส่ข้อมูลลับ<br/><br/>Starting chat sends your questions and recent conversation to OpenRouter and its model provider. Do not include secrets.</p><button className="button primary" onClick={() => setConsent(true)}>เริ่มแชท / Start chat</button></div> : <>
