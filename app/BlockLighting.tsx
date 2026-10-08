@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 export default function BlockLighting() {
   useEffect(() => {
-    const media = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+    const media = window.matchMedia('(any-hover: hover) and (any-pointer: fine) and (prefers-reduced-motion: no-preference)');
     let frame = 0;
     let previous: HTMLElement | null = null;
     let x = 0, y = 0, targetX = 0, targetY = 0;

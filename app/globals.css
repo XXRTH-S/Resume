@@ -33,6 +33,10 @@ body{font-family:Inter,'Segoe UI',Arial,sans-serif;line-height:1.75;background-i
 @media(max-width:760px){.hero{padding-top:76px;row-gap:56px}.hero-copy{padding:20px}.hero-copy .intro{margin-top:30px}}
 @media(max-width:420px){.hero{padding-top:64px;row-gap:44px}.hero-copy{padding:16px 10px}.hero-copy .hero-description{margin-block:28px 32px}}
 /* Theme-aware trace light: a soft mint pool with a tighter, subtle highlight. */
-:root{--trace-pool:14%;--trace-core:8%}
-:root[data-theme=light]{--trace-pool:9%;--trace-core:5%}
-@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){:is(.project-card,.skill-card,.system-explorer,.contact,.journey article,.hero-copy,.about-grid>div:first-child).light-following:after{background:radial-gradient(90px circle at var(--light-x,50%) var(--light-y,20%),color-mix(in srgb,var(--accent) var(--trace-core),transparent),transparent 100%),radial-gradient(340px circle at var(--light-x,50%) var(--light-y,20%),color-mix(in srgb,var(--accent) var(--trace-pool),transparent),transparent 75%)}}
+:root{--trace-pool:22%;--trace-core:13%}
+:root[data-theme=light]{--trace-pool:17%;--trace-core:10%}
+@media (any-hover:hover) and (any-pointer:fine) and (prefers-reduced-motion:no-preference){:is(.project-card,.skill-card,.system-explorer,.contact,.journey article,.hero-copy,.about-grid>div:first-child).light-following:after{background:radial-gradient(90px circle at var(--light-x,50%) var(--light-y,20%),color-mix(in srgb,var(--accent) var(--trace-core),transparent),transparent 100%),radial-gradient(340px circle at var(--light-x,50%) var(--light-y,20%),color-mix(in srgb,var(--accent) var(--trace-pool),transparent),transparent 75%)}}
+
+/* Keep card lighting above the surface and below readable, clickable content. */
+:is(.project-card,.skill-card,.system-explorer,.contact):after{z-index:0}
+:is(.project-card,.skill-card,.system-explorer,.contact)>*{position:relative;z-index:1}
