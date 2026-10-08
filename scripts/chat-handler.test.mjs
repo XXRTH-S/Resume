@@ -4,7 +4,7 @@ import { createChatHandler } from '../server/chat-handler.mjs';
 
 const env = { OPENROUTER_API_KEY: 'test-only' };
 const success = async () => ({ response: Response.json({ choices: [{ message: { content: 'Resume answer' } }] }) });
-const request = (body = { messages: [{ role: 'user', content: 'Skills?' }] }, headers = {}) => new Request('https://resume.example/api/chat', {
+const request = (body = { messages: [{ role: 'user', content: 'Explain how the PM project uses authentication.' }] }, headers = {}) => new Request('https://resume.example/api/chat', {
   method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'https://resume.example', ...headers }, body: typeof body === 'string' ? body : JSON.stringify(body),
 });
 

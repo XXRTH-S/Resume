@@ -1,8 +1,11 @@
 import { resume } from './resume.mjs';
+import { skillSummary } from './skill-summary.mjs';
 
 // Deliberately match complete, standalone questions only. Compound questions
 // and follow-ups stay with the model rather than silently dropping their intent.
 export function verifiedAnswer(messages) {
+  const skills = skillSummary(messages);
+  if (skills) return skills;
   const question = messages.at(-1)?.content?.trim().replace(/[?？!。]+$/u, '').trim();
   if (!question) return null;
   const current = resume.employment[0];
