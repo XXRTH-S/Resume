@@ -4,11 +4,11 @@ import { verifiedAnswer } from '../server/verified-answers.mjs';
 import { createChatHandler } from '../server/chat-handler.mjs';
 const ask = content => verifiedAnswer([{ role: 'user', content }]);
 
-test('current role uses verified employer and source', () => {
+test('current role uses verified employer without a resume footer', () => {
   const answer = ask('ตอนนี้ทำงานอะไรอยู่?');
   assert.match(answer, /Full-Stack Developer/);
   assert.match(answer, /Bangkok Expressway and Metro/);
-  assert.match(answer, /ที่มา/);
+  assert.doesNotMatch(answer, /ที่มา: เรซูเม่|Source: supplied resume/);
 });
 test('C# skill is not overstated as employer experience', () => {
   assert.match(ask('มีประสบการณ์ C# และ .NET ไหม?'), /ยังไม่ได้ระบุโปรเจกต์/);
