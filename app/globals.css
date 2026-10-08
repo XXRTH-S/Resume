@@ -35,7 +35,7 @@ body{font-family:Inter,'Segoe UI',Arial,sans-serif;line-height:1.75;background-i
 /* Theme-aware trace light: a soft mint pool with a tighter, subtle highlight. */
 :root{--trace-pool:22%;--trace-core:13%}
 :root[data-theme=light]{--trace-pool:17%;--trace-core:10%}
-@media (any-hover:hover) and (any-pointer:fine) and (prefers-reduced-motion:no-preference){:is(.project-card,.skill-card,.system-explorer,.contact,.journey article,.hero-copy,.about-grid>div:first-child).light-following:after{background:radial-gradient(90px circle at var(--light-x,50%) var(--light-y,20%),color-mix(in srgb,var(--accent) var(--trace-core),transparent),transparent 100%),radial-gradient(340px circle at var(--light-x,50%) var(--light-y,20%),color-mix(in srgb,var(--accent) var(--trace-pool),transparent),transparent 75%)}}
+@media (any-hover:hover) and (any-pointer:fine){:is(.project-card,.skill-card,.system-explorer,.contact,.journey article,.hero-copy,.about-grid>div:first-child).light-following:after{background:radial-gradient(90px circle at var(--light-x,50%) var(--light-y,20%),color-mix(in srgb,var(--accent) var(--trace-core),transparent),transparent 100%),radial-gradient(340px circle at var(--light-x,50%) var(--light-y,20%),color-mix(in srgb,var(--accent) var(--trace-pool),transparent),transparent 75%)}}
 
 /* Keep card lighting above the surface and below readable, clickable content. */
 :is(.project-card,.skill-card,.system-explorer,.contact):after{z-index:0}

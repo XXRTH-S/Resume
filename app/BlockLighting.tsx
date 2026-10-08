@@ -4,14 +4,15 @@ import { useEffect } from 'react';
 
 export default function BlockLighting() {
   useEffect(() => {
-    const media = window.matchMedia('(any-hover: hover) and (any-pointer: fine) and (prefers-reduced-motion: no-preference)');
+    const media = window.matchMedia('(any-hover: hover) and (any-pointer: fine)');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let frame = 0;
     let previous: HTMLElement | null = null;
     let x = 0, y = 0, targetX = 0, targetY = 0;
     const draw = () => {
       if (!previous) return;
-      x += (targetX - x) * 0.22;
-      y += (targetY - y) * 0.22;
+      x = reducedMotion.matches ? targetX : x + (targetX - x) * 0.22;
+      y = reducedMotion.matches ? targetY : y + (targetY - y) * 0.22;
       previous.style.setProperty('--light-x', `${x}px`);
       previous.style.setProperty('--light-y', `${y}px`);
       frame = Math.abs(targetX - x) + Math.abs(targetY - y) > 0.5 ? requestAnimationFrame(draw) : 0;
@@ -33,7 +34,8 @@ export default function BlockLighting() {
     window.addEventListener('blur', clear);
     window.addEventListener('scroll', clear, true);
     media.addEventListener('change', clear);
-    return () => { clear(); document.removeEventListener('pointermove', move); document.documentElement.removeEventListener('pointerleave', clear); window.removeEventListener('blur', clear); window.removeEventListener('scroll', clear, true); media.removeEventListener('change', clear); };
+    reducedMotion.addEventListener('change', clear);
+    return () => { clear(); document.removeEventListener('pointermove', move); document.documentElement.removeEventListener('pointerleave', clear); window.removeEventListener('blur', clear); window.removeEventListener('scroll', clear, true); media.removeEventListener('change', clear); reducedMotion.removeEventListener('change', clear); };
   }, []);
   return null;
 }
