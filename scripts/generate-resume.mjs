@@ -22,8 +22,8 @@ const copy = {
     ],
     skills: [
       ['Languages', 'TypeScript, JavaScript, Python, C#, SQL, Dart, PHP, Java, C'],
-      ['Web & mobile', 'React, Next.js (project work), Node.js, Express, Flutter, .NET, Laravel, HTML/CSS'],
-      ['Data & tools', 'SQL Server, MySQL, Prisma, Git, Docker; PostgreSQL, pgvector, FastAPI, Redis (project work)'],
+      ['Web & mobile', 'React, Next.js, Node.js, Express, Flutter, .NET, Laravel, HTML/CSS'],
+      ['Data & tools', 'SQL Server, MySQL, Prisma, Git, Docker; PostgreSQL, pgvector, FastAPI, Redis'],
     ],
     projects: [
       ['PM Management', '2026', 'React, TypeScript, Node.js, SQL Server', 'IT maintenance platform with role-based access, configurable checklists, activity logs, Excel reporting, and Docker Compose.', 'https://github.com/XXRTH-S/PM_Workshop_2026'],
@@ -35,21 +35,21 @@ const copy = {
   },
   th: {
     name: resume.thaiName, location: 'กรุงเทพฯ ประเทศไทย',
-    summary: 'นักพัฒนา Full-stack มีประสบการณ์สร้างและปรับปรุงเว็บกับแอปมือถือ ตั้งแต่ฐานข้อมูลและ API ไปจนถึงหน้าจอการใช้งาน พร้อมพัฒนาโปรเจกต์ด้านผู้ช่วย AI การค้นหาคำตอบจากเอกสาร และการถอดเสียงกับสรุปภาษาไทย',
+    summary: 'นักพัฒนา Full-stack ครอบคลุมฐานข้อมูล API และหน้าจอสำหรับเว็บและแอปมือถือ\nพัฒนาโปรเจกต์ผู้ช่วย AI ระบบถามตอบจากเอกสาร และระบบถอดเสียงพร้อมสรุปภาษาไทย',
     headings: ['เกี่ยวกับฉัน', 'ประสบการณ์ทำงาน', 'ทักษะและเทคโนโลยี', 'ผลงานที่เลือกมาแนะนำ', 'การศึกษาและภาษา'],
     jobs: [
-      ['บริษัท ทางด่วนและรถไฟฟ้ากรุงเทพ จำกัด (มหาชน)', 'ปัจจุบัน', 'พัฒนาและดูแลเว็บ ทั้งหน้าบ้าน หลังบ้าน ฐานข้อมูล และการเชื่อมต่อระบบ ปรับปรุงระบบเดิมตามความต้องการของธุรกิจ พร้อมแก้ไขปัญหาการทำงานและประสิทธิภาพของระบบ'],
+      ['บริษัท ทางด่วนและรถไฟฟ้ากรุงเทพ จำกัด (มหาชน)', 'ปัจจุบัน', 'พัฒนาและดูแลเว็บ ทั้งหน้าบ้าน หลังบ้าน ฐานข้อมูล และการเชื่อมต่อระบบ\nปรับปรุงระบบตามความต้องการของธุรกิจ พร้อมแก้ไขปัญหาและพัฒนาประสิทธิภาพ'],
       ['บริษัท เคซีอี อีเลคโทรนิคส์ จำกัด (มหาชน)', '2025', 'พัฒนาแอปมือถือและเว็บไซต์ประกอบ ตั้งแต่ออกแบบฐานข้อมูลและ UX/UI ไปจนถึงอัปโหลดรูป ค้นหา เรียงข้อมูล และหน้าจอเฉพาะผู้ใช้ รวมทั้งเพิ่มการส่งออก Excel และข้อมูลเพิ่มเติมให้เว็บเดิม'],
     ],
     skills: [
       ['ภาษา', 'TypeScript, JavaScript, Python, C#, SQL, Dart, PHP, Java, C'],
-      ['เว็บและมือถือ', 'React, Next.js (ใช้ในโปรเจกต์), Node.js, Express, Flutter, .NET, Laravel, HTML/CSS'],
-      ['ข้อมูลและเครื่องมือ', 'SQL Server, MySQL, Prisma, Git, Docker; PostgreSQL, pgvector, FastAPI, Redis (ใช้ในโปรเจกต์)'],
+      ['เว็บและมือถือ', 'React, Next.js, Node.js, Express, Flutter, .NET, Laravel, HTML/CSS'],
+      ['ข้อมูลและเครื่องมือ', 'SQL Server, MySQL, Prisma, Git, Docker; PostgreSQL, pgvector, FastAPI, Redis'],
     ],
     projects: [
-      ['PM Management', '2026', 'React, TypeScript, Node.js, SQL Server', 'ระบบบำรุงรักษาอุปกรณ์ IT มีสิทธิ์ตามบทบาท รายการตรวจสอบที่ปรับได้ ประวัติกิจกรรม และรายงาน Excel ติดตั้งผ่าน Docker Compose', 'https://github.com/XXRTH-S/PM_Workshop_2026'],
-      ['Rag playground', '2026', 'Python, FastAPI, Next.js, pgvector', 'ถามตอบจากเอกสารภาษาไทยด้วย OCR ตามความจำเป็นและ BGE-M3 ผสานการค้นหา keyword กับ vector พร้อมแสดงคำตอบต่อเนื่องและแหล่งอ้างอิง', 'https://github.com/XXRTH-S/Rag_Project_2026'],
-      ['Buzzle', '2026', 'Next.js, FastAPI, PostgreSQL, RQ, Redis', 'ถอดเสียงภาษาไทยเป็นข้อความที่แก้ไขและฟังย้อนตามเวลาได้ สรุป 7 รูปแบบและส่งออก PDF ผ่าน Groq กับ OpenRouter เป็นโปรเจกต์ส่วนตัวที่ทดลองด้วย Docker ในเครื่อง', null],
+      ['PM Management', '2026', 'React, TypeScript, Node.js, SQL Server', 'ระบบบำรุงรักษาอุปกรณ์ IT พร้อมสิทธิ์ตามบทบาท รายการตรวจสอบ และประวัติกิจกรรม\nสร้างรายงาน Excel และติดตั้งระบบผ่าน Docker Compose', 'https://github.com/XXRTH-S/PM_Workshop_2026'],
+      ['Rag playground', '2026', 'Python, FastAPI, Next.js, pgvector', 'ระบบถามตอบจากเอกสารภาษาไทย ใช้ OCR และ BGE-M3 ตามขั้นตอนประมวลผล\nผสานการค้นหา keyword กับ vector และแสดงคำตอบพร้อมแหล่งอ้างอิง', 'https://github.com/XXRTH-S/Rag_Project_2026'],
+      ['Buzzle', '2026', 'Next.js, FastAPI, PostgreSQL, RQ, Redis', 'ถอดเสียงภาษาไทย แก้ไขข้อความ ฟังย้อนตามเวลา และสรุป 7 รูปแบบเป็น PDF\nใช้ Groq และ OpenRouter เป็นโปรเจกต์ส่วนตัวที่ทดลองผ่าน Docker ในเครื่อง', null],
       ['Bubble Resume Assistant', '2026', 'Next.js, React, OpenRouter', 'ผู้ช่วยตอบคำถามเรซูเม่สองภาษา ใช้ข้อมูลประสบการณ์และผลงาน เชื่อมต่อโมเดลฝั่งเซิร์ฟเวอร์ พร้อมมาสคอตเคลื่อนไหว', 'https://github.com/XXRTH-S/Resume'],
     ],
     education: 'มหาวิทยาลัยศิลปากร | วิทยาการคอมพิวเตอร์ | 2020-2024', languages: 'ภาษาไทย: ภาษาแม่ | ภาษาอังกฤษ: ระดับดี',
