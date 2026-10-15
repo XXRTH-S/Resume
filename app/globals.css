@@ -62,3 +62,5 @@ html[lang=th] .hero-description{line-height:1.9}
 html[lang=th] :is(.timeline-date,.system-top,.system-bottom,.system-snippet,.stack-bar span){font-family:var(--font-thai),Tahoma,sans-serif;letter-spacing:0}
 html[lang=th] h1{font-size:clamp(30px,3.7vw,54px);line-height:1.4;overflow-wrap:anywhere}
 html[lang=th] :is(input,textarea,select){font-family:inherit}
+
+.download-format{font-size:10px;letter-spacing:.3px;color:var(--muted);white-space:nowrap}.resume-download{flex-wrap:wrap}.resume-download:hover{border-color:var(--accent)}
