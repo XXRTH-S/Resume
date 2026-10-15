@@ -1,3 +1,4 @@
+import { renderResume } from './resume-template.mjs';
 // Run with Node.js and Playwright installed. Generates only public portfolio facts.
 import { createRequire } from 'node:module';
 import { readFile, mkdir } from 'node:fs/promises';
@@ -54,25 +55,13 @@ const copy = {
     education: 'มหาวิทยาลัยศิลปากร | วิทยาการคอมพิวเตอร์ | 2020-2024', languages: 'ภาษาไทย: ภาษาแม่ | ภาษาอังกฤษ: ระดับดี',
   },
 };
+const portrait = (await readFile(new URL('./resume-fonts/portrait.jpg', import.meta.url))).toString('base64');
 const browser = await chromium.launch({ headless: true, channel: 'chrome' });
 try {
   await mkdir(`${root}public/downloads`, { recursive: true });
   await mkdir(`${root}output/pdf`, { recursive: true });
   for (const [language, c] of Object.entries(copy)) {
-    const section = (i, body) => `<section><h2>${c.headings[i]}</h2>${body}</section>`;
-    const html = `<!doctype html><html lang="${language}"><head><meta charset="utf-8"><title>${esc(c.name)} - Resume</title><style>
-      @font-face{font-family:Prompt;src:url(data:font/ttf;base64,${regular});font-weight:400}
-      @font-face{font-family:Prompt;src:url(data:font/ttf;base64,${bold});font-weight:600}
-      @page{size:A4;margin:14mm 16mm}*{box-sizing:border-box}body{margin:0;color:#192d3b;font-family:${language === 'th' ? 'Prompt' : 'Arial'},sans-serif;font-size:9.3pt;line-height:1.48}
-      h1{font-size:25pt;line-height:1.25;margin:0;font-weight:600}header{border-bottom:2px solid #16776d;padding-bottom:9pt}.role{font-size:12pt;color:#16776d;margin:4pt 0 7pt}
-      .contact{font-size:8.4pt;line-height:1.65}a{color:inherit;text-decoration:none}h2{font-size:10pt;color:#16776d;letter-spacing:${language === 'th' ? '0' : '.9px'};margin:11pt 0 5pt;font-weight:600}p{margin:0 0 4pt}article{break-inside:avoid;margin-bottom:7pt}.row{display:flex;justify-content:space-between;gap:12pt;font-weight:600}.date{white-space:nowrap;font-size:9pt;font-weight:400}.tech{font-size:8pt;color:#506473;margin:1pt 0 2pt}.job-role{font-size:9pt;margin:1pt 0 3pt}strong{font-weight:600}section{break-inside:avoid}footer{border-top:1px solid #d5dfe3;margin-top:10pt;padding-top:5pt;font-size:8pt;color:#506473}
-    </style></head><body><header><h1>${esc(c.name)}</h1><p class="role">Full-Stack Developer</p><div class="contact">${esc(c.location)} | ${esc(resume.contact.phone)} | ${link('mailto:'+resume.contact.email,resume.contact.email)}<br>${link('https://resume-psi-neon.vercel.app/','resume-psi-neon.vercel.app')} | ${link(resume.contact.github,'github.com/XXRTH-S')}</div></header>
-    ${section(0, `<p>${esc(c.summary)}</p>`)}
-    ${section(1, c.jobs.map(([name,date,body])=>`<article><div class="row"><span>${esc(name)}</span><span class="date">${date}</span></div><p class="job-role">Full-Stack Developer</p><p>${esc(body)}</p></article>`).join(''))}
-    ${section(2, c.skills.map(([label,body])=>`<p><strong>${esc(label)}:</strong> ${esc(body)}</p>`).join(''))}
-    ${section(3, c.projects.map(([name,date,tech,body,url])=>`<article><div class="row"><span>${url?link(url,name):esc(name)}</span><span class="date">${date}</span></div><p class="tech">${esc(tech)}</p><p>${esc(body)}</p></article>`).join(''))}
-    ${section(4, `<p>${esc(c.education)}</p><p>${esc(c.languages)}</p>`)}
-    </body></html>`;
+    const html = renderResume({ language, c, resume, esc, link, regular, bold, portrait });
     const page = await browser.newPage();
     await page.setContent(html);
     await page.evaluate(() => document.fonts.ready);
