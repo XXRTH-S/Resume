@@ -53,8 +53,12 @@ html{scrollbar-width:thin;scrollbar-color:var(--scroll-thumb) var(--bg)}
 .language-toggle{display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:0 10px;border:1px solid var(--border);border-radius:9px;background:transparent;color:var(--muted);font-size:12px;font-weight:500;white-space:nowrap}
 .language-toggle .active{color:var(--accent);font-weight:700}
 .language-divider{opacity:.4}
-html[lang=th] body{font-family:Tahoma,Arial,sans-serif}
+html[lang=th] body{font-family:var(--font-thai),Tahoma,Arial,sans-serif}
 html[lang=th] :is(h1,h2,h3,h4,.eyebrow){letter-spacing:0;line-height:1.5}
 html[lang=th] .eyebrow{font-family:inherit}
 html[lang=th] .hero-description{line-height:1.9}
 @media(max-width:760px){.header-actions{gap:8px}.language-toggle{padding-inline:8px}}
+
+html[lang=th] :is(.timeline-date,.system-top,.system-bottom,.system-snippet,.stack-bar span){font-family:var(--font-thai),Tahoma,sans-serif;letter-spacing:0}
+html[lang=th] h1{font-size:clamp(30px,3.7vw,54px);line-height:1.4;overflow-wrap:anywhere}
+html[lang=th] :is(input,textarea,select){font-family:inherit}
