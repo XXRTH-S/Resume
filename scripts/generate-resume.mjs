@@ -55,13 +55,12 @@ const copy = {
     education: 'มหาวิทยาลัยศิลปากร | วิทยาการคอมพิวเตอร์ | 2020-2024', languages: 'ภาษาไทย: ภาษาแม่ | ภาษาอังกฤษ: ระดับดี',
   },
 };
-const portrait = (await readFile(new URL('./resume-fonts/portrait.jpg', import.meta.url))).toString('base64');
 const browser = await chromium.launch({ headless: true, channel: 'chrome' });
 try {
   await mkdir(`${root}public/downloads`, { recursive: true });
   await mkdir(`${root}output/pdf`, { recursive: true });
   for (const [language, c] of Object.entries(copy)) {
-    const html = renderResume({ language, c, resume, esc, link, regular, bold, portrait });
+    const html = renderResume({ language, c, resume, esc, link, regular, bold });
     const page = await browser.newPage();
     await page.setContent(html);
     await page.evaluate(() => document.fonts.ready);
