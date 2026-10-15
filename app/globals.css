@@ -40,3 +40,21 @@ body{font-family:Inter,'Segoe UI',Arial,sans-serif;line-height:1.75;background-i
 /* Keep card lighting above the surface and below readable, clickable content. */
 :is(.project-card,.skill-card,.system-explorer,.contact):after{z-index:0}
 :is(.project-card,.skill-card,.system-explorer,.contact)>*{position:relative;z-index:1}
+
+/* Quiet native scrollbars keep mouse, keyboard, and touch scrolling intact. */
+:root{--scroll-thumb:color-mix(in srgb,var(--muted) 45%,var(--bg))}
+html{scrollbar-width:thin;scrollbar-color:var(--scroll-thumb) var(--bg)}
+*{scrollbar-width:thin;scrollbar-color:var(--scroll-thumb) transparent}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--scroll-thumb);border-radius:20px}
+::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+::-webkit-scrollbar-button{display:none;width:0;height:0}
+.language-toggle{display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:0 10px;border:1px solid var(--border);border-radius:9px;background:transparent;color:var(--muted);font-size:12px;font-weight:500;white-space:nowrap}
+.language-toggle .active{color:var(--accent);font-weight:700}
+.language-divider{opacity:.4}
+html[lang=th] body{font-family:Tahoma,Arial,sans-serif}
+html[lang=th] :is(h1,h2,h3,h4,.eyebrow){letter-spacing:0;line-height:1.5}
+html[lang=th] .eyebrow{font-family:inherit}
+html[lang=th] .hero-description{line-height:1.9}
+@media(max-width:760px){.header-actions{gap:8px}.language-toggle{padding-inline:8px}}

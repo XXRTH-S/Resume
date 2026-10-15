@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useLanguage } from './Language';
 import { ArrowUpRight, Code2, Database, Layers, Sparkles } from 'lucide-react';
 
 const layers = [
@@ -11,14 +12,15 @@ const layers = [
 ];
 
 export default function SystemExplorer() {
+  const { t } = useLanguage();
   const [active, setActive] = useState(0);
   const layer = layers[active];
   return <div className="system-explorer">
-    <div className="system-top"><span><i/> SYSTEM EXPLORER</span><span>INTERACTIVE / 01</span></div>
-    <div className="system-map" role="group" aria-label="Explore application layers">
-      {layers.map((item, index) => <button key={item.title} aria-pressed={active === index} onClick={() => setActive(index)}><item.icon size={22}/><span>{item.title}</span><small>0{index + 1}</small></button>)}
+    <div className="system-top"><span><i/>{t("SYSTEM EXPLORER")}</span><span>{t("INTERACTIVE / 01")}</span></div>
+    <div className="system-map" role="group" aria-label={t("Explore application layers")}>
+      {layers.map((item, index) => <button key={t(item.title)} aria-pressed={active === index} onClick={() => setActive(index)}><item.icon size={22}/><span>{item.title}</span><small>0{index + 1}</small></button>)}
     </div>
-    <div className="system-detail" aria-live="polite"><div className="eyebrow">{layer.label}</div><h3>{layer.tools}</h3><p>{layer.description}</p><div className="system-snippet"><span>›</span> {layer.snippet}</div></div>
-    <div className="system-bottom"><span>Select a layer to explore</span><ArrowUpRight size={16}/></div>
+    <div className="system-detail" aria-live="polite"><div className="eyebrow">{t(layer.label)}</div><h3>{layer.tools}</h3><p>{t(layer.description)}</p><div className="system-snippet"><span>›</span> {t(layer.snippet)}</div></div>
+    <div className="system-bottom"><span>{t("Select a layer to explore")}</span><ArrowUpRight size={16}/></div>
   </div>;
 }
